@@ -1,0 +1,31 @@
+{
+  "cluster_name": "analytics-cluster",
+  "spark_version": "13.3.x-scala2.12",
+  "node_type_id": "Standard_DS3_v2",
+  "driver_node_type_id": "Standard_DS3_v2",
+  "num_workers": 4,
+  "autoscale": {
+    "min_workers": 2,
+    "max_workers": 8
+  },
+  "spark_conf": {
+    "spark.databricks.delta.preview.enabled": "true",
+    "spark.databricks.cluster.profile": "serverless"
+  },
+  "azure_attributes": {
+    "first_on_demand": 1,
+    "availability": "ON_DEMAND_AZURE",
+    "spot_bid_max_price": -1
+  },
+  "spark_env_vars": {
+    "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+  },
+  "enable_elastic_disk": true,
+  "init_scripts": [
+    {
+      "dbfs": {
+        "destination": "dbfs:/databricks/init_scripts/setup.sh"
+      }
+    }
+  ]
+}

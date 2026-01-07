@@ -1,0 +1,6 @@
+databricks-cli==0.18.0
+databricks-connect==13.3.0
+delta-spark==2.4.0
+pyspark==3.4.1
+pandas==2.0.3
+pyarrow==12.0.1

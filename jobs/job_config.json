@@ -1,0 +1,49 @@
+{
+  "name": "Production ETL Job",
+  "job_clusters": [
+    {
+      "job_cluster_key": "etl_cluster",
+      "new_cluster": {
+        "spark_version": "13.3.x-scala2.12",
+        "node_type_id": "Standard_DS3_v2",
+        "num_workers": 3,
+        "spark_conf": {
+          "spark.speculation": true
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "task_key": "extract_data",
+      "job_cluster_key": "etl_cluster",
+      "notebook_task": {
+        "notebook_path": "/Workspace/notebooks/ETL_Pipeline",
+        "base_parameters": {
+          "environment": "production"
+        }
+      }
+    },
+    {
+      "task_key": "transform_data",
+      "depends_on": [
+        {
+          "task_key": "extract_data"
+        }
+      ],
+      "job_cluster_key": "etl_cluster",
+      "spark_python_task": {
+        "python_file": "dbfs:/FileStore/scripts/transform.py",
+        "parameters": ["--input", "/mnt/data/raw", "--output", "/mnt/data/processed"]
+      }
+    }
+  ],
+  "schedule": {
+    "quartz_cron_expression": "0 0 2 * * ?",
+    "timezone_id": "UTC"
+  },
+  "email_notifications": {
+    "on_failure": ["data-team@company.com"]
+  },
+  "max_concurrent_runs": 1
+}
