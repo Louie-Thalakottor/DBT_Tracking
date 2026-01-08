@@ -1,6 +1,8 @@
-# Databricks Data Engineering Project
+# DBT_Tracking
 
-This repository contains Databricks notebooks, workflows, and configuration files for the data engineering pipeline.
+Testing Databricks presence in the repo.
+
+This is a dummy repository that mimics Databricks structure for testing detection scripts.
 
 ## Structure
 
